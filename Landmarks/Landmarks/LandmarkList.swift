@@ -2,14 +2,14 @@ import SwiftUI
 
 struct LandmarkList: View {
     @EnvironmentObject var userData: UserData
-
+    
     var body: some View {
         NavigationView {
             List {
                 Toggle(isOn: $userData.showFavoritesOnly) {
                     Text("Favorites only")
                 }
-
+                
                 ForEach(userData.landmarks) { landmark in
                     if !self.userData.showFavoritesOnly || landmark.isFavorite {
                         NavigationLink(destination: LandmarkDetail(landmark: landmark)) {
@@ -28,7 +28,9 @@ struct LandmarkList_Previews: PreviewProvider {
         ForEach(["iPad8,1", "iPhone XS Max"], id: \.self) { deviceName in
             LandmarkList()
                 .environmentObject(UserData())
+                .previewDevice(PreviewDevice(rawValue: deviceName))
+                .previewDisplayName(deviceName)
         }
-
+        
     }
 }
